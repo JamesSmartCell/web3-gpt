@@ -43,6 +43,7 @@ You are **Web3 GPT**, an AI assistant specialized in writing and deploying smart
 - Only provide snippets of code when the user explicitly requests them.
 - Here is a sample TokenScript template:
 
+
 <ts:token xmlns:ethereum="urn:ethereum:constantinople" xmlns:ts="http://tokenscript.org/2022/09/tokenscript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="MintTest" xsi:schemaLocation="http://tokenscript.org/2022/09/tokenscript https://www.tokenscript.org/schemas/2022-09/tokenscript.xsd">
     <ts:label>
         <ts:plurals xml:lang="en">
@@ -220,7 +221,7 @@ p.light {
 		}
 
 		render() {
-            return `&lt;div class="card"&gt;&lt;div class="card-image"&gt; 
+            return \`&lt;div class="card"&gt;&lt;div class="card-image"&gt; 
         &lt;svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"&gt;
             &lt;g fill="none" fill-rule="evenodd"&gt;
                 &lt;circle fill="#597DF2" cx="12" cy="12" r="12"/&gt;
@@ -237,7 +238,7 @@ p.light {
             &lt;p class="value"&gt;${value_totalSupply}&lt;/p&gt;
         &lt;/div&gt;
         &lt;/div&gt;
-        &lt;br/&gt;&lt;h3&gt;Burn&lt;/h3&gt;&lt;br/&gt;&lt;p&gt;Call burn function&lt;br/&gt;`;
+        &lt;br/&gt;&lt;h3&gt;Burn&lt;/h3&gt;&lt;br/&gt;&lt;p&gt;Call burn function&lt;br/&gt;\`;
         }
 	}
 
@@ -278,7 +279,7 @@ p.light {
 		}
 
 		render() {
-            return `&lt;div class="card"&gt;&lt;div class="card-image"&gt; 
+            return \`&lt;div class="card"&gt;&lt;div class="card-image"&gt; 
         &lt;svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"&gt;
             &lt;g fill="none" fill-rule="evenodd"&gt;
                 &lt;circle fill="#597DF2" cx="12" cy="12" r="12"/&gt;
@@ -295,7 +296,7 @@ p.light {
             &lt;p class="value"&gt;${value_symbol}&lt;/p&gt;
         &lt;/div&gt;
         &lt;/div&gt;
-        &lt;br/&gt;&lt;h3&gt;Mint&lt;/h3&gt;&lt;br/&gt;&lt;p&gt;Call mint function&lt;br/&gt;`;
+        &lt;br/&gt;&lt;h3&gt;Mint&lt;/h3&gt;&lt;br/&gt;&lt;p&gt;Call mint function&lt;br/&gt;\`;
         }
 	}
 
@@ -330,7 +331,7 @@ p.light {
 		}
 
 		render() {
-            return `&lt;div class="card"&gt;&lt;div class="card-image"&gt; 
+            return \`&lt;div class="card"&gt;&lt;div class="card-image"&gt; 
         &lt;svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"&gt;
             &lt;g fill="none" fill-rule="evenodd"&gt;
                 &lt;circle fill="#597DF2" cx="12" cy="12" r="12"/&gt;
@@ -347,7 +348,7 @@ p.light {
             &lt;p class="value"&gt;${value_totalSupply}&lt;/p&gt;
         &lt;/div&gt;
         &lt;/div&gt;
-        `;
+        \`;
         }
 	}
 
@@ -380,7 +381,6 @@ p.light {
         </ts:origins>
     </ts:attribute>
 </ts:token>
-        
     `
   }
 ]
