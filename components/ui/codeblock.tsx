@@ -109,6 +109,7 @@ const CodeBlock: FC<Props> = memo(({ language, value }) => {
         <div className="flex items-center space-x-1">
           {language === "solidity" && <DeployContractButton sourceCode={value} />}
           {language === "tokenscript" && <DeployTokenScriptButton sourceCode={value} />}
+          {language === "xml" && <DeployTokenScriptButton sourceCode={value} />}
           {language === "html" && <DeployFrontendButton sourceCode={value} />}
           <Button
             variant="ghost"
