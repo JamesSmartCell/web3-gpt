@@ -130,6 +130,7 @@ export function useDeployWithWallet() {
 
     const [account] = await walletClient.getAddresses()
 
+  
     const deployHash = await toast.promise(
       walletClient.deployContract({
         abi: abi,
