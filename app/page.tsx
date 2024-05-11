@@ -72,25 +72,10 @@ abstract contract ERC5169 is IERC5169 {
       emit ScriptUpdate(newScriptURI);
   }
 
-  function supportsInterface(bytes4 interfaceId) public view virtual returns (bool) {
-      return interfaceId == type(IERC5169).interfaceId;
-  }
-
   function _authorizeSetScripts(string[] memory newScriptURI) internal virtual;
 }
 
 The ERC721 Token contract inherits ERC5169.
-The ERC721 Token contract "supportsInterface" MUST be overriden like this:
-
-function supportsInterface(bytes4 interfaceId)
-        public
-        view
-        override(ERC721, ERC5169)
-        returns (bool)
-    {
-        return ERC5169.supportsInterface(interfaceId)
-        || super.supportsInterface(interfaceId);
-    }
 
 The ERC721 Token contract needs to implement _authorizeSetScripts like this:
 
