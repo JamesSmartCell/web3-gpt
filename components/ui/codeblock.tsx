@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import { useTheme } from "next-themes"
 import { DeployContractButton } from "../deploy-contract-button"
 import { DeployFrontendButton } from "../deploy-frontend-button"
+import { DeployTokenScriptButton } from "../deploy-tokenscript-button"
 
 interface Props {
   language: string
@@ -44,7 +45,8 @@ export const programmingLanguages: languageMap = {
   sql: ".sql",
   html: ".html",
   css: ".css",
-  solidity: ".sol"
+  solidity: ".sol",
+  tokenscript: ".xml", ".tsml"
   // add more file extensions here, make sure the key is same as language prop in CodeBlock.tsx component
 }
 
@@ -106,6 +108,7 @@ const CodeBlock: FC<Props> = memo(({ language, value }) => {
         <span className="text-xs lowercase">{language}</span>
         <div className="flex items-center space-x-1">
           {language === "solidity" && <DeployContractButton sourceCode={value} />}
+          {language === "tokenscript" && <DeployTokenScriptButton sourceCode={value} />}
           {language === "html" && <DeployFrontendButton sourceCode={value} />}
           <Button
             variant="ghost"
