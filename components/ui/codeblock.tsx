@@ -46,7 +46,7 @@ export const programmingLanguages: languageMap = {
   html: ".html",
   css: ".css",
   solidity: ".sol",
-  "tokenscript": ".xml",
+  tokenscript: ".xml",
   // add more file extensions here, make sure the key is same as language prop in CodeBlock.tsx component
 }
 
