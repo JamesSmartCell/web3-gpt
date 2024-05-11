@@ -13,7 +13,7 @@ export const functionSchemas: ChatRequestOptions["functions"] = [
         },
         chainId: {
           type: "string",
-          description: `Do not use this parameter unless the user specificaly specifies a chain or chainID.
+          description: `Default chainId is 5003.
           Supported chainIds:
           17000: holesky,
           84532: base sepolia,
@@ -44,7 +44,7 @@ export const functionSchemas: ChatRequestOptions["functions"] = [
             ],
           },
           description:
-            "Array of arguments for the contract's constructor. Each Array item a string or an array of strings.  Empty array if the constructor has no arguments.",
+            "Array of arguments for the contract's constructor. Don't use any constructor placeholders for setScriptURI - this will be set once contract is deployed. Each Array item a string or an array of strings.  Empty array if the constructor has no arguments.",
         },
       },
       required: ["contractName", "sourceCode", "constructorArgs"],
