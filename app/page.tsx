@@ -76,16 +76,24 @@ abstract contract ERC5169 is IERC5169 {
       return interfaceId == type(IERC5169).interfaceId;
   }
 
-  /**
-   * @dev Function that should revert when msg.sender is not authorized to set script URI. Called by
-   * {setScriptURI}.
-   *
-   */
   function _authorizeSetScripts(string[] memory newScriptURI) internal virtual;
 }
 
-The contract inherits ERC5169.
-Then the supportsInterface must be overriden, adding 'return ERC5169.supportsInterface(interfaceId) || super.supportsInterface(interfaceId);' to the return. Finally the  _authorizeSetScripts must be overriden like this: 'function _authorizeSetScripts(string[] memory) internal virtual override onlyOwner() {}'
+The Token contract inherits ERC5169.
+The Token contract "supportsInterface" must be overriden like this:
+
+function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        override(ERC721, ERC721Enumerable, ERC5169)
+        returns (bool)
+    {
+        return ERC5169.supportsInterface(interfaceId)
+        || super.supportsInterface(interfaceId);
+    }
+
+function _authorizeSetScripts(string[] memory) internal virtual override onlyOwner() {}
+
 
 - Here is a sample TokenScript template:
 
