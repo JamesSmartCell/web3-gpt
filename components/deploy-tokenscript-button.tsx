@@ -11,7 +11,7 @@ import {
   DialogTitle,
   DialogTrigger
 } from "@/components/ui/dialog"
-import { useDeployWithWallet } from "@/lib/functions/deploy-contract/wallet-deploy"
+import { useWriteToIPFS } from "@/lib/functions/deploy-contract/tokenscript-deploy"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useMemo, useState } from "react"
@@ -20,14 +20,15 @@ import { IconExternalLink, IconSpinner } from "./ui/icons"
 import { useGlobalStore } from "@/app/state/global-store"
 import { useAccount, useChains } from "wagmi"
 import { nanoid } from "@/lib/utils"
+import ipfsStoreFile from "@/lib/functions/deploy-contract/ipfs-ts-upload"
 
 export function DeployTokenScriptButton({ sourceCode }: { sourceCode: string }) {
-  const { deploy: deployWithWallet } = useDeployWithWallet()
+    const { deploy: deployIPFS } = useWriteToIPFS()
   const [constructorArgs, setConstructorArgs] = useState<string[]>([])
   const [explorerUrl, setExplorerUrl] = useState<string>("")
   const [ipfsUrl, setIpfsUrl] = useState<string>("")
   const [isErrorDeploying, setIsErrorDeploying] = useState<boolean>(false)
-  const { isDeploying, setIsDeploying, isGenerating } = useGlobalStore()
+  const { isDeploying, setIsDeploying, isGenerating, setTokenScriptViewerUrl } = useGlobalStore()
   const supportedChains = useChains()
   const { chain } = useAccount()
 
@@ -82,15 +83,39 @@ export function DeployTokenScriptButton({ sourceCode }: { sourceCode: string }) 
   }
 
   // Handler for deploy with wallet
-  const handleDeployWithWallet = async () => {
+//   const handleDeployWithWallet = async () => {
+//     setIsDeploying(true)
+//     setIsErrorDeploying(false)
+//     try {
+//       const { explorerUrl, ipfsUrl } = await deployWithWallet({
+//         contractName: getContractName(),
+//         sourceCode,
+//         constructorArgs: constructorArgs
+//       })
+//       explorerUrl && setExplorerUrl(explorerUrl)
+//       setIpfsUrl(ipfsUrl)
+
+//       setIsDeploying(false)
+//     } catch (e) {
+//       console.log(e)
+//       setIsErrorDeploying(true)
+//       setIsDeploying(false)
+//     }
+//   }
+
+  // Handler for deploy to IPFS
+  const handleDeployToIPFS = async () => {
     setIsDeploying(true)
     setIsErrorDeploying(false)
     try {
-      const { explorerUrl, ipfsUrl } = await deployWithWallet({
-        contractName: getContractName(),
-        sourceCode,
-        constructorArgs: constructorArgs
-      })
+      const tokenscriptViewerUrl = await deployIPFS({
+        tokenScriptSource: sourceCode
+      });
+
+      console.log(tokenscriptViewerUrl);
+
+      setTokenScriptViewerUrl(tokenscriptViewerUrl as string);
+      
       explorerUrl && setExplorerUrl(explorerUrl)
       setIpfsUrl(ipfsUrl)
 
@@ -186,10 +211,10 @@ export function DeployTokenScriptButton({ sourceCode }: { sourceCode: string }) 
             <Button
               className="mb-4 p-6 sm:p-4"
               disabled={isDeploying}
-              onClick={handleDeployWithWallet}
+              onClick={handleDeployToIPFS}
               variant="secondary"
             >
-              Deploy with Wallet
+              Deploy to IPFS
             </Button>
           </DialogFooter>
         </DialogContent>

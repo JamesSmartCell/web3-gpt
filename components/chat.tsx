@@ -16,7 +16,7 @@ import { Landing } from "@/components/landing"
 import { useGlobalStore } from "@/app/state/global-store"
 import { useW3GPTDeploy } from "@/lib/hooks/use-w3gpt-deploy"
 import { useAccount, useChains } from "wagmi"
-import { useEffect } from "react"
+import { use, useEffect } from "react"
 
 export interface ChatProps extends React.ComponentProps<"div"> {
   initialMessages?: Message[]
@@ -35,6 +35,7 @@ export function Chat({ id, initialMessages, className, showLanding = false, avat
     setDeployContractConfig,
     verifyContractConfig,
     lastDeploymentData,
+    tokenScriptViewerUrl,
     setLastDeploymentData
   } = useGlobalStore()
   const supportedChains = useChains()
@@ -42,6 +43,28 @@ export function Chat({ id, initialMessages, className, showLanding = false, avat
   const isSupportedChain = !!(chain && supportedChains.find((c) => c.id === chain.id))
   const activeChainId = isSupportedChain ? chain.id : 5003
   const { deploy } = useW3GPTDeploy({ chainId: activeChainId })
+
+  useEffect(() => {
+    if (lastDeploymentData) {
+      console.log("new deployment detected ", lastDeploymentData)
+      append({
+        id: nanoid(),
+        role: "system",
+        content: `The user has successfully deployed a contract manually here are the details: \n\n${JSON.stringify(lastDeploymentData, null, 2)}`
+      })
+    }
+  }, [lastDeploymentData])
+
+  useEffect(() => {
+    if (tokenScriptViewerUrl) {
+      append({
+        id: nanoid(),
+        role: "system",
+        content: `The user has setTheScripturi and dpeloyed the tokenscript here are the details for you to share with the user: \n\n${JSON.stringify(tokenScriptViewerUrl, null, 2)}`
+      })
+    }
+  }, [tokenScriptViewerUrl])
+      
 
   useEffect(() => {
     let isMounted = true
@@ -173,6 +196,7 @@ export function Chat({ id, initialMessages, className, showLanding = false, avat
       }
     }
   })
+
 
   return (
     <>

@@ -208,6 +208,7 @@ export function useDeployWithWallet() {
       }
 
       setLastDeploymentData(deploymentData)
+      console.log("deploymentData form wallet-deploy", deploymentData)
       return deploymentData
     } catch (error) {
       console.log(error)
