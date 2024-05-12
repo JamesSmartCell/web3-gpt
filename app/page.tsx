@@ -192,5 +192,6 @@ export default async function ChatIndexPage() {
   // const session = await auth()
   // const avatarUrl = session?.user?.image
   const id = nanoid()
+  console.log(process.env.NEXT_PUBLIC_NFT_STORAGE_API_KEY,"NFT_STORAGE_API_KEY")
   return <Chat initialMessages={initialMessages} id={id} showLanding  />
 }

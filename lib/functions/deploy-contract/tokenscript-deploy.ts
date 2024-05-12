@@ -29,15 +29,6 @@ export function useWriteToIPFS() {
     const tokenAddress = lastDeploymentData?.address;
     const ipfsCid = await ipfsStoreFile(tokenScriptSource);
 
-    /*const ipfsUploadResponse = await fetch("/api/ipfs-ts-upload", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(tokenScriptSource)
-    })*/
-
-    //const ipfsCid = await ipfsUploadResponse.json();
     const ipfsRoute = [`ipfs://${ipfsCid}`];
 
     //now set the IPFS route

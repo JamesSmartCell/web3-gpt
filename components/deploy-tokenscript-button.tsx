@@ -82,27 +82,6 @@ export function DeployTokenScriptButton({ sourceCode }: { sourceCode: string }) 
     return inputFields
   }
 
-  // Handler for deploy with wallet
-//   const handleDeployWithWallet = async () => {
-//     setIsDeploying(true)
-//     setIsErrorDeploying(false)
-//     try {
-//       const { explorerUrl, ipfsUrl } = await deployWithWallet({
-//         contractName: getContractName(),
-//         sourceCode,
-//         constructorArgs: constructorArgs
-//       })
-//       explorerUrl && setExplorerUrl(explorerUrl)
-//       setIpfsUrl(ipfsUrl)
-
-//       setIsDeploying(false)
-//     } catch (e) {
-//       console.log(e)
-//       setIsErrorDeploying(true)
-//       setIsDeploying(false)
-//     }
-//   }
-
   // Handler for deploy to IPFS
   const handleDeployToIPFS = async () => {
     setIsDeploying(true)

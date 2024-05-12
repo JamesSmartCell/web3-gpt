@@ -1,6 +1,6 @@
 import { NFTStorage, File } from "nft.storage"
 
-const NFT_STORAGE_TOKEN = process.env.NFT_STORAGE_API_KEY || ""
+const NFT_STORAGE_TOKEN = process.env.NEXT_PUBLIC_NFT_STORAGE_API_KEY || ""
 const client = new NFTStorage({ token: NFT_STORAGE_TOKEN })
 
 const ipfsUpload = async (
