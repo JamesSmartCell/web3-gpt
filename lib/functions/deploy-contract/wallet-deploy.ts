@@ -6,6 +6,7 @@ import { useAccount, usePublicClient, useWalletClient } from "wagmi"
 import toast from "react-hot-toast"
 import { useGlobalStore } from "@/app/state/global-store"
 import { track } from "@vercel/analytics"
+import etherscanVerify from "./etherscan-verify"
 
 export function useDeployWithWallet() {
   const { chain: viemChain } = useAccount()
@@ -174,6 +175,7 @@ export function useDeployWithWallet() {
 
     setVerifyContractConfig(verifyContractConfig)
 
+  
     const txHashExplorerUrl = `${getExplorerUrl(viemChain)}/tx/${deployHash}`
 
     track("deployed_contract", {
@@ -206,6 +208,10 @@ export function useDeployWithWallet() {
         abi,
         sourceCode
       }
+
+      //manually verify here, since we can't use the in-line chat method when deploying from wallet
+      const verifyContractResponse = await etherscanVerify(standardJsonInput, encodedConstructorArgs, contractName, address!, viemChain.id);
+      console.log("verifyContractResponse", verifyContractResponse);
 
       setLastDeploymentData(deploymentData)
       console.log("deploymentData form wallet-deploy", deploymentData)

@@ -59,11 +59,11 @@ export const API_URLS: Record<Chain["id"], string> = {
 };
 
 export const API_KEYS: Record<Chain["id"], string> = {
-  11155111: `${process.env.ETHEREUM_EXPLORER_API_KEY}`,
+  11155111: `${process.env.NEXT_PUBLIC_ETHERSCAN_VERIFY_KEY}`,
   80002: `${process.env.POLYGON_EXPLORER_API_KEY}`,
   84532: `${process.env.BASE_EXPLORER_API_KEY}`,
-  1: `${process.env.ETHEREUM_EXPLORER_API_KEY}`,
-  17000: `${process.env.ETHEREUM_EXPLORER_API_KEY}`,
+  1: `${process.env.NEXT_PUBLIC_ETHERSCAN_VERIFY_KEY}`,
+  17000: `${process.env.NEXT_PUBLIC_ETHERSCAN_VERIFY_KEY}`,
   420: `${process.env.OPTIMISM_EXPLORER_API_KEY}`,
   5003: `${process.env.MANTLE_EXPLORER_API_KEY}`,
   421614: `${process.env.ARBITRUM_EXPLORER_API_KEY}`,

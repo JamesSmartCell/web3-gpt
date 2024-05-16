@@ -46,8 +46,6 @@ export function useWriteToIPFS() {
         args: [ipfsRoute]
       });
 
-      
-
       // Send the transaction
     txHash = await walletClient.sendTransaction({
       to: tokenAddress,
