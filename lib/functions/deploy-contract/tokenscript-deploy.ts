@@ -7,6 +7,7 @@ import toast from "react-hot-toast"
 import { useGlobalStore } from "@/app/state/global-store"
 import { track } from "@vercel/analytics"
 import { parseAbiItem } from "viem";
+//import ipfsStoreFilePin from "./ipfs-ts-upload-pin"
 import ipfsStoreFile from "./ipfs-ts-upload"
 
 export function useWriteToIPFS() {
@@ -27,9 +28,12 @@ export function useWriteToIPFS() {
     }
 
     const tokenAddress = lastDeploymentData?.address;
+    //const ipfsCid = await ipfsStoreFilePin(tokenScriptSource);
     const ipfsCid = await ipfsStoreFile(tokenScriptSource);
 
     const ipfsRoute = [`ipfs://${ipfsCid}`];
+
+    console.log(`ipfsRoute: ${JSON.stringify(ipfsRoute)}`);
 
     //now set the IPFS route
     const setScriptURIAbi = parseAbiItem('function setScriptURI(string[] memory newScriptURI)');

@@ -20,7 +20,6 @@ import { IconExternalLink, IconSpinner } from "./ui/icons"
 import { useGlobalStore } from "@/app/state/global-store"
 import { useAccount, useChains } from "wagmi"
 import { nanoid } from "@/lib/utils"
-import ipfsStoreFile from "@/lib/functions/deploy-contract/ipfs-ts-upload"
 
 export function DeployTokenScriptButton({ sourceCode }: { sourceCode: string }) {
     const { deploy: deployIPFS } = useWriteToIPFS()

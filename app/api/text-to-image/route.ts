@@ -11,7 +11,7 @@ interface GenerationResponse {
 }
 
 const client = new NFTStorage({
-  token: process.env.NFT_STORAGE_API_KEY as string
+  token: process.env.NEXT_PUBLIC_NFT_STORAGE_API_KEY as string
 })
 
 export async function POST(req: Request) {
