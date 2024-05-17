@@ -33,7 +33,7 @@ export async function POST(req: Request) {
 
   const res = await openai.chat.completions.create({
     //model: userId ? "gpt-4-turbo" : "gpt-3.5-turbo",
-    model: "gpt-4o",
+    model: "gpt-4-turbo",
     stream: true,
     messages: limitedMessagesArray(messages),
     functions
