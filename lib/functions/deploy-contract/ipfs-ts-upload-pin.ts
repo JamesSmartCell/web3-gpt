@@ -1,7 +1,6 @@
 import axios from 'axios';
 import FormData from 'form-data';
 import { Readable } from 'stream';
-import { Blob } from 'blob-polyfill';
 
 const stringToBlob = (input: string): Blob => {
   const buffer = Buffer.from(input, 'utf-8');
