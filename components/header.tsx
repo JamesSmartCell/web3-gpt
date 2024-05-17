@@ -49,7 +49,7 @@ export async function Header() {
                   "bg-gray-300": !isSignedIn
                 })}
               >
-                {isSignedIn ? "GPT-4" : "GPT-3.5"}
+                {"GPT-4o"}
               </Badge>
             </TooltipTrigger>
             <TooltipContent>{isSignedIn ? "GPT-4 Turbo" : "Login for GPT-4"}</TooltipContent>
