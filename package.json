@@ -27,7 +27,6 @@
     "@vercel/og": "^0.5.20",
     "ai": "^2.2.25",
     "axios": "^1.6.8",
-    "blob-polyfill": "^7.0.20220408",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "focus-trap-react": "^10.2.3",
