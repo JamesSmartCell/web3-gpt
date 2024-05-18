@@ -36,7 +36,7 @@ const ipfsStoreFilePin = async (content: string) => {
     try {
       const response = await axios.post(url, data, {
         headers: {
-          'Content-Type': `multipart/form-data; boundary= ${data._boundary}`,
+          'Content-Type': `multipart/form-data`,
           pinata_api_key: apiKey,
           pinata_secret_api_key: secretApiKey,
         },
