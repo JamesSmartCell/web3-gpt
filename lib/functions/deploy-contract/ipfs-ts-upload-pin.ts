@@ -1,40 +1,48 @@
 import axios from 'axios';
-import FormData from 'form-data';
-import { Readable } from 'stream';
-
-const stringToBlob = (input: string): Blob => {
-  const buffer = Buffer.from(input, 'utf-8');
-  return new Blob([buffer], { type: 'text/plain' });
-};
+import fs from 'fs';
 
 const ipfsStoreFilePin = async (content: string) => {
   const apiKey = process.env.NEXT_PUBLIC_PINATA_API_KEY || "";
   const secretApiKey = process.env.NEXT_PUBLIC_PINATA_SECRET_API_KEY || "";
-  const secretApiBearer = process.env.NEXT_PUBLIC_PINATA_SECRET_API_BEARER || "";
 
   const url = 'https://api.pinata.cloud/pinning/pinFileToIPFS';
 
   try {
-    const data = new FormData();
-    const buffer = Buffer.from(content, 'utf-8');
-    const blob = stringToBlob(content);
+    const tsBlob = new Blob([content], {
+      type: "text/plain"
+    })
+    const tsFie = new File([tsBlob], "tokenscript.tsml");
+  
+    // Upload the metadata to NFTStorage
+    //const metadataCid = await client.storeBlob(metadataFile)
+    //const metadataUrl = `ipfs://${metadataCid}`
+
+
+    //const data = new FormData();
+    //const buffer = Buffer.from(content, 'utf-8');
+    //const blob = stringToBlob(content);
 
     //TypeError: Failed to execute 'append' on 'FormData': parameter 2 is not of type 'Blob'.
   
-    data.append('file', blob, {
+    /*data.append('file', blob, {
       filename: 'content.txt',
       contentType: 'text/plain',
       knownLength: buffer.length
-    });
+    });*/
+
+    let data = new FormData();
+    data.append('file', tsFie);
   
     try {
       const response = await axios.post(url, data, {
         headers: {
-          'Content-Type': `multipart/form-data;`,
+          'Content-Type': `multipart/form-data; boundary= ${data._boundary}`,
           pinata_api_key: apiKey,
           pinata_secret_api_key: secretApiKey,
         },
       });
+
+      console.log(`JSON response: ${JSON.stringify(response.data)}`);
     
       return response.data.IpfsHash;
   } catch (error) {

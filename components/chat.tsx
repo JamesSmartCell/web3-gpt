@@ -60,7 +60,7 @@ export function Chat({ id, initialMessages, className, showLanding = false, avat
       append({
         id: nanoid(),
         role: "system",
-        content: `The user has setTheScripturi and dpeloyed the tokenscript here are the details for you to share with the user: \n\n${JSON.stringify(tokenScriptViewerUrl, null, 2)}`
+        content: `The user has set the scriptURI and dpeloyed the TokenScript here are the details for you to share with the user: \n\n${JSON.stringify(tokenScriptViewerUrl, null, 2)}`
       })
     }
   }, [tokenScriptViewerUrl])
