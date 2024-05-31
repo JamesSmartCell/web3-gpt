@@ -331,7 +331,7 @@ If the user asks for an ENS naming service feature, then add this to the TokenSc
                     document.addEventListener("DOMContentLoaded", function() {
                       window.onload = function startup() {
                           // 1. call API to fetch current name
-                          fetch(\`\${serverAddr}/name/${currentTokenInstance.chainId}/\${currentTokenInstance.contractAddress}/\${currentTokenInstance.tokenId}\`)
+                          fetch(\`\${serverAddr}/name/\${currentTokenInstance.chainId}/\${currentTokenInstance.contractAddress}/\${currentTokenInstance.tokenId}\`)
                               .then(handleErrorsJSON)
                               .then(function (data) {
                                   const result = data.result;
@@ -355,7 +355,7 @@ If the user asks for an ENS naming service feature, then add this to the TokenSc
                         web3.personal.sign({ data: registerMsg }, function (error, value) {
                             if (error != null) {
                                 document.getElementById('status').innerHTML = "Sign attempt failed";
-                                console.log(\`Sign attempt failed: ${error}\`);
+                                console.log(\`Sign attempt failed: \${error}\`);
                             }
                             else
                             {
