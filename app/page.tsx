@@ -312,7 +312,7 @@ If the user asks for an ENS naming service feature, then add this to the TokenSc
                     function handleErrors(response) {
                         if (!response.ok) {
                             let errorResp = response.json();
-                            throw Error(\`${errorResp.fail}\`);
+                            throw Error(\`\${errorResp.fail}\`);
                         }
                         return response.text();
                     }
@@ -320,7 +320,7 @@ If the user asks for an ENS naming service feature, then add this to the TokenSc
                     async function handleErrorsJSON(response) {
                         if (!response.ok) {
                             let errorResp = await response.json();
-                            throw Error(\`${errorResp.fail}\`);
+                            throw Error(\`\${errorResp.fail}\`);
                         }
                         return response.json();
                     }
@@ -331,14 +331,14 @@ If the user asks for an ENS naming service feature, then add this to the TokenSc
                     document.addEventListener("DOMContentLoaded", function() {
                       window.onload = function startup() {
                           // 1. call API to fetch current name
-                          fetch(\`${serverAddr}/name/${currentTokenInstance.chainId}/${currentTokenInstance.contractAddress}/${currentTokenInstance.tokenId}\`)
+                          fetch(\`\${serverAddr}/name/${currentTokenInstance.chainId}/\${currentTokenInstance.contractAddress}/\${currentTokenInstance.tokenId}\`)
                               .then(handleErrorsJSON)
                               .then(function (data) {
                                   const result = data.result;
                                   if (result.length == 0) {
                                     document.getElementById('msg').innerHTML = "Name not set";
                                   } else {
-                                    document.getElementById('msg').innerHTML = \`Current Name: ${result}\`
+                                    document.getElementById('msg').innerHTML = "Current Name: " + result
                                   }
                                   window.challenge = result
                               })
@@ -348,7 +348,7 @@ If the user asks for an ENS naming service feature, then add this to the TokenSc
                         var nameText = document.getElementById('name-txt').value;
                         nameText = nameText.substring(0, 255); //limit to 255 characters
                         //form the NFT naming request
-                        const registerMsg = \`Attempting to register NFT ${nameText}.${domainName} name to ${currentTokenInstance.contractAddress} ${currentTokenInstance.tokenId} on chain ${currentTokenInstance.chainId}\`;
+                        const registerMsg = \`Attempting to register NFT \${nameText}.\${domainName} name to \${currentTokenInstance.contractAddress} \${currentTokenInstance.tokenId} on chain \${currentTokenInstance.chainId}\`;
 
                         document.getElementById('status').innerHTML = 'Wait for signature...'
                         // 2. sign challenge to generate request
@@ -363,7 +363,7 @@ If the user asks for an ENS naming service feature, then add this to the TokenSc
                             document.getElementById('status').innerHTML = 'Verifying name request ...'
                             // 3. register new name
                             let contractAddress = document.getElementById("contractAddress").textContent;
-                            fetch(\`${serverAddr}/registerNFT/${currentTokenInstance.chainId}/${currentTokenInstance.contractAddress}/${nameText}.${domainName}/${currentTokenInstance.tokenId}/${value}\`, {
+                            fetch(\`\${serverAddr}/registerNFT/\${currentTokenInstance.chainId}/\${currentTokenInstance.contractAddress}/\${nameText}.\${domainName}/\${currentTokenInstance.tokenId}/\${value}\`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
