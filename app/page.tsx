@@ -299,7 +299,7 @@ If the user asks for an ENS naming service feature, then add this to the TokenSc
                                  <h3>Name</h3>
                                  <input id="name-txt" type="text" value='' />
                               </div>
-                        <div id="contractAddress">${this.props.contractAddress}</div>
+                        <div id="contractAddress">\${this.props.contractAddress}</div>
                         <div id="status"/>\`;
                     }
                 }
