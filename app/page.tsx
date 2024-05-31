@@ -292,7 +292,7 @@ If the user asks for an ENS naming service feature, then add this to the TokenSc
                     }
                     
                     render() {
-                    return`
+                    return\`
                         <h3>Set ENS name for your token ...</h3>
                         <div id="msg"></div>
                         <div id="inputBox">
@@ -300,7 +300,7 @@ If the user asks for an ENS naming service feature, then add this to the TokenSc
                                  <input id="name-txt" type="text" value='' />
                               </div>
                         <div id="contractAddress">${this.props.contractAddress}</div>
-                        <div id="status"/>`;
+                        <div id="status"/>\`;
                     }
                 }
                 
@@ -312,7 +312,7 @@ If the user asks for an ENS naming service feature, then add this to the TokenSc
                     function handleErrors(response) {
                         if (!response.ok) {
                             let errorResp = response.json();
-                            throw Error(`${errorResp.fail}`);
+                            throw Error(\`${errorResp.fail}\`);
                         }
                         return response.text();
                     }
@@ -320,7 +320,7 @@ If the user asks for an ENS naming service feature, then add this to the TokenSc
                     async function handleErrorsJSON(response) {
                         if (!response.ok) {
                             let errorResp = await response.json();
-                            throw Error(`${errorResp.fail}`);
+                            throw Error(\`${errorResp.fail}\`);
                         }
                         return response.json();
                     }
@@ -331,7 +331,7 @@ If the user asks for an ENS naming service feature, then add this to the TokenSc
                     document.addEventListener("DOMContentLoaded", function() {
                       window.onload = function startup() {
                           // 1. call API to fetch current name
-                          fetch(`${serverAddr}/name/${currentTokenInstance.chainId}/${currentTokenInstance.contractAddress}/${currentTokenInstance.tokenId}`)
+                          fetch(\`${serverAddr}/name/${currentTokenInstance.chainId}/${currentTokenInstance.contractAddress}/${currentTokenInstance.tokenId}\`)
                               .then(handleErrorsJSON)
                               .then(function (data) {
                                   const result = data.result;
@@ -348,23 +348,22 @@ If the user asks for an ENS naming service feature, then add this to the TokenSc
                         var nameText = document.getElementById('name-txt').value;
                         nameText = nameText.substring(0, 255); //limit to 255 characters
                         //form the NFT naming request
-                        const registerMsg = `Attempting to register NFT ${nameText}.${domainName} name to ${currentTokenInstance.contractAddress} ${currentTokenInstance.tokenId} on chain ${currentTokenInstance.chainId}`;
+                        const registerMsg = \`Attempting to register NFT ${nameText}.${domainName} name to ${currentTokenInstance.contractAddress} ${currentTokenInstance.tokenId} on chain ${currentTokenInstance.chainId}\`;
 
                         document.getElementById('status').innerHTML = 'Wait for signature...'
                         // 2. sign challenge to generate request
                         web3.personal.sign({ data: registerMsg }, function (error, value) {
                             if (error != null) {
-                                document.getElementById('status').innerHTML = `Sign attempt failed`;
-                                console.log(`Sign attempt failed: ${error}`);
+                                document.getElementById('status').innerHTML = "Sign attempt failed";
+                                console.log(\`Sign attempt failed: ${error}\`);
                             }
                             else
                             {
             
                             document.getElementById('status').innerHTML = 'Verifying name request ...'
                             // 3. register new name
-                            //fetch(`${serverAddr}:8080/api/${iotAddr}/checkMarqueeSig?msg=${messageText}&amp;sig=${value}`)
                             let contractAddress = document.getElementById("contractAddress").textContent;
-                            fetch(`${serverAddr}/registerNFT/${currentTokenInstance.chainId}/${currentTokenInstance.contractAddress}/${nameText}.${domainName}/${currentTokenInstance.tokenId}/${value}`, {
+                            fetch(\`${serverAddr}/registerNFT/${currentTokenInstance.chainId}/${currentTokenInstance.contractAddress}/${nameText}.${domainName}/${currentTokenInstance.tokenId}/${value}\`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -382,7 +381,7 @@ If the user asks for an ENS naming service feature, then add this to the TokenSc
                                     }
                                 }).catch(function(err) {
                                     document.getElementById('status').innerHTML = `${err}`
-                                  console.log(`error: ${err}`);
+                                  console.log(\`error: ${err}\`);
                                 });
                             }
                         });
