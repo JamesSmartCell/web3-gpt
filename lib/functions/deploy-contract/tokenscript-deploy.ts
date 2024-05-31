@@ -16,7 +16,7 @@ export function useWriteToIPFS() {
   const publicClient = usePublicClient({
     chainId: viemChain?.id || 5003
   })
-  const { setLastDeploymentData, setVerifyContractConfig, lastDeploymentData } = useGlobalStore()
+  const { lastDeploymentData } = useGlobalStore()
 
   async function deploy({
     tokenScriptSource

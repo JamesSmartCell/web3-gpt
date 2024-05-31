@@ -201,6 +201,200 @@ if user wants a burn function, then add this to the TokenScript:
             </ts:view>
         </ts:card>
 
+If the user asks for an ENS naming service feature, then add this to the TokenScript:
+
+<ts:card type="action" name="name" buttonClass="primary" origins="Token">
+            <ts:label>
+                <ts:string xml:lang="en">
+                    Name
+                </ts:string>
+            </ts:label>
+            <ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+            <style type="text/css">
+                .ts-count {
+                    font-family: "SourceSansPro";
+                    font-weight: bolder;
+                    font-size: 21px;
+                    color: rgb(117, 185, 67);
+                  }
+                  .ts-category {
+                    font-family: "SourceSansPro";
+                    font-weight: lighter;
+                    font-size: 21px;
+                    color: rgb(67, 67, 67);
+                  }
+                  .ts-venue {
+                    font-family: "SourceSansPro";
+                    font-weight: lighter;
+                    font-size: 16px;
+                    color: rgb(67, 67, 67);
+                  }
+                  .ts-date {
+                    font-family: "SourceSansPro";
+                    font-weight: bold;
+                    font-size: 14px;
+                    color: rgb(112, 112, 112);
+                    margin-left: 7px;
+                    margin-right: 7px;
+                  }
+                  .ts-time {
+                    font-family: "SourceSansPro";
+                    font-weight: lighter;
+                    font-size: 16px;
+                    color: rgb(112, 112, 112);
+                  }
+                  html {
+                  }
+                  
+                  body {
+                  padding: 0px;
+                  margin: 0px;
+                  }
+                  
+                  div {
+                  margin: 0px;
+                  padding: 0px;
+                  }
+                  
+                  .data-icon {
+                  height:16px;
+                  vertical-align: middle
+                  }
+                  
+                  .tbml-count {   font-family: "SourceSansPro";   font-weight: bolder;   font-size: 21px;   color: rgb(117, 185, 67); } .tbml-category {   font-family: "SourceSansPro";   font-weight: lighter;   font-size: 21px;   color: rgb(67, 67, 67); } .tbml-venue {   font-family: "SourceSansPro";   font-weight: lighter;   font-size: 16px;   color: rgb(67, 67, 67); } .tbml-date {   font-family: "SourceSansPro";   font-weight: bold;   font-size: 14px;   color: rgb(112, 112, 112);   margin-left: 7px;   margin-right: 7px; } .tbml-time {   font-family: "SourceSansPro";   font-weight: lighter;   font-size: 16px;   color: rgb(112, 112, 112); }    html {    }        body {    padding: 0px;    margin: 0px;    }        div {    margin: 0px;    padding: 0px;    }     .data-icon {    height:16px;    vertical-align: middle    } 
+                  #inputBox {
+                    text-align: center;
+                  }
+                  input {
+                    position: relative;
+                    font-weight: normal;
+                    font-style: normal;
+                    font-size: 12px;
+                    display: -ms-inline-flexbox;
+                    display: inline-flex;
+                    color: rgba(0, 0, 0, 0.87);
+                    padding: 9.5px 14px;
+                    width: 300px;
+                    border-color: #D8D8D8;
+                  }
+                  input[type=text]:focus {
+                    border-color: #D8D8D8;
+                    background: #FAFAFA;
+                    color: rgba(0, 0, 0, 0.87);
+                    -webkit-box-shadow: none;
+                    box-shadow: none;
+                  }
+            </style>
+            <script type="text/javascript">
+                class Token {
+                    constructor(tokenInstance) {
+                        this.props = tokenInstance
+                    }
+                    
+                    render() {
+                    return`
+                        &lt;h3&gt;Set ENS name for your token ...&lt;/h3&gt;
+                        &lt;div id="msg"&gt;&lt;/div&gt;
+                        &lt;div id="inputBox"&gt;
+                                 &lt;h3&gt;Name&lt;/h3&gt;
+                                 &lt;input id="name-txt" type="text" value='' /&gt;
+                              &lt;/div&gt;
+                        &lt;div id="contractAddress"&gt;${this.props.contractAddress}&lt;/div&gt;
+                        &lt;div id="status"/&gt;`;
+                    }
+                }
+                
+                web3.tokens.dataChanged = (oldTokens, updatedTokens, cardId) =&gt; {
+                    const currentTokenInstance = updatedTokens.currentInstance;
+                    document.getElementById(cardId).innerHTML = new Token(currentTokenInstance).render(); 
+                };
+                
+                    function handleErrors(response) {
+                        if (!response.ok) {
+                            let errorResp = response.json();
+                            throw Error(`${errorResp.fail}`);
+                        }
+                        return response.text();
+                    }
+
+                    async function handleErrorsJSON(response) {
+                        if (!response.ok) {
+                            let errorResp = await response.json();
+                            throw Error(`${errorResp.fail}`);
+                        }
+                        return response.json();
+                    }
+  
+                    var serverAddr = "https://ens.main.smartlayer.network";
+                    var domainName = "xnft.eth";
+                
+                    document.addEventListener("DOMContentLoaded", function() {
+                      window.onload = function startup() {
+                          // 1. call API to fetch current name
+                          fetch(`${serverAddr}/name/${currentTokenInstance.chainId}/${currentTokenInstance.contractAddress}/${currentTokenInstance.tokenId}`)
+                              .then(handleErrorsJSON)
+                              .then(function (data) {
+                                  const result = data.result;
+                                  if (result.length == 0) {
+                                    document.getElementById('msg').innerHTML = `Name not set`;
+                                  } else {
+                                    document.getElementById('msg').innerHTML = `Current Name: ${result}`
+                                  }
+                                  window.challenge = result
+                              })
+                      }
+
+                      window.onConfirm = function onConfirm(signature) {
+                        var nameText = document.getElementById('name-txt').value;
+                        nameText = nameText.substring(0, 255); //limit to 255 characters
+                        //form the NFT naming request
+                        const registerMsg = `Attempting to register NFT ${nameText}.${domainName} name to ${currentTokenInstance.contractAddress} ${currentTokenInstance.tokenId} on chain ${currentTokenInstance.chainId}`;
+
+                        document.getElementById('status').innerHTML = 'Wait for signature...'
+                        // 2. sign challenge to generate request
+                        web3.personal.sign({ data: registerMsg }, function (error, value) {
+                            if (error != null) {
+                                document.getElementById('status').innerHTML = `Sign attempt failed`;
+                                console.log(`Sign attempt failed: ${error}`);
+                            }
+                            else
+                            {
+            
+                            document.getElementById('status').innerHTML = 'Verifying name request ...'
+                            // 3. register new name
+                            //fetch(`${serverAddr}:8080/api/${iotAddr}/checkMarqueeSig?msg=${messageText}&amp;sig=${value}`)
+                            let contractAddress = document.getElementById("contractAddress").textContent;
+                            fetch(`${serverAddr}/registerNFT/${currentTokenInstance.chainId}/${currentTokenInstance.contractAddress}/${nameText}.${domainName}/${currentTokenInstance.tokenId}/${value}`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(""),
+                            })
+                            .then(handleErrorsJSON)
+                                .then(function (response) {
+                                    const result = response.result;
+                                    if (result == "pass") {
+                                        document.getElementById('status').innerHTML = 'Name registered!'
+                                        window.close()
+                                    } else {
+                                        document.getElementById('status').innerHTML = 'Failed with: ' + response
+                                    }
+                                }).catch(function(err) {
+                                    document.getElementById('status').innerHTML = `${err}`
+                                  console.log(`error: ${err}`);
+                                });
+                            }
+                        });
+                        window.challenge = '';
+                        document.getElementById('msg').innerHTML = '';
+                    }
+                    });
+        </script>
+        
+            </ts:view>
+        </ts:card>
+
     `
   }
 ]
