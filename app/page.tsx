@@ -336,9 +336,9 @@ If the user asks for an ENS naming service feature, then add this to the TokenSc
                               .then(function (data) {
                                   const result = data.result;
                                   if (result.length == 0) {
-                                    document.getElementById('msg').innerHTML = `Name not set`;
+                                    document.getElementById('msg').innerHTML = "Name not set";
                                   } else {
-                                    document.getElementById('msg').innerHTML = `Current Name: ${result}`
+                                    document.getElementById('msg').innerHTML = \`Current Name: ${result}\`
                                   }
                                   window.challenge = result
                               })
