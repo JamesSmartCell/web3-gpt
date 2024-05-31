@@ -293,18 +293,18 @@ If the user asks for an ENS naming service feature, then add this to the TokenSc
                     
                     render() {
                     return`
-                        &lt;h3&gt;Set ENS name for your token ...&lt;/h3&gt;
-                        &lt;div id="msg"&gt;&lt;/div&gt;
-                        &lt;div id="inputBox"&gt;
-                                 &lt;h3&gt;Name&lt;/h3&gt;
-                                 &lt;input id="name-txt" type="text" value='' /&gt;
-                              &lt;/div&gt;
-                        &lt;div id="contractAddress"&gt;${this.props.contractAddress}&lt;/div&gt;
-                        &lt;div id="status"/&gt;`;
+                        <h3>Set ENS name for your token ...</h3>
+                        <div id="msg"></div>
+                        <div id="inputBox">
+                                 <h3>Name</h3>
+                                 <input id="name-txt" type="text" value='' />
+                              </div>
+                        <div id="contractAddress">${this.props.contractAddress}</div>
+                        <div id="status"/>`;
                     }
                 }
                 
-                web3.tokens.dataChanged = (oldTokens, updatedTokens, cardId) =&gt; {
+                web3.tokens.dataChanged = (oldTokens, updatedTokens, cardId) => {
                     const currentTokenInstance = updatedTokens.currentInstance;
                     document.getElementById(cardId).innerHTML = new Token(currentTokenInstance).render(); 
                 };
