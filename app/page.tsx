@@ -380,8 +380,8 @@ If the user asks for an ENS naming service feature, then add this to the TokenSc
                                         document.getElementById('status').innerHTML = 'Failed with: ' + response
                                     }
                                 }).catch(function(err) {
-                                    document.getElementById('status').innerHTML = `${err}`
-                                  console.log(\`error: ${err}\`);
+                                    document.getElementById('status').innerHTML = err
+                                  console.log("error: " + err);
                                 });
                             }
                         });
