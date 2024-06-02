@@ -4,6 +4,7 @@ import fs from 'fs';
 const ipfsStoreFilePin = async (content: string) => {
   const apiKey = process.env.NEXT_PUBLIC_PINATA_API_KEY || "";
   const secretApiKey = process.env.NEXT_PUBLIC_PINATA_SECRET_API_KEY || "";
+  const pinataJWT = process.env.NEXT_PUBLIC_PINATA_JWT || "";
 
   const url = 'https://api.pinata.cloud/pinning/pinFileToIPFS';
 
@@ -37,8 +38,7 @@ const ipfsStoreFilePin = async (content: string) => {
       const response = await axios.post(url, data, {
         headers: {
           'Content-Type': `multipart/form-data`,
-          pinata_api_key: apiKey,
-          pinata_secret_api_key: secretApiKey,
+          Authorization: `Bearer ${pinataJWT}`,
         },
       });
 
@@ -47,9 +47,11 @@ const ipfsStoreFilePin = async (content: string) => {
       return response.data.IpfsHash;
   } catch (error) {
     console.error('Error writing to temporary file:', error);
+    return null;
   }
 } catch (error) {
   console.error('Error uploading file to IPFS:', error);  
+  return null;
 }
 }
   

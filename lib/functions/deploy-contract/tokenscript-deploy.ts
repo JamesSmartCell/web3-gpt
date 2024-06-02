@@ -27,9 +27,20 @@ export function useWriteToIPFS() {
       throw new Error("Wallet not available")
     }
 
+    let deployToast = toast.loading("Deploying TokenScript to IPFS...");
+
     const tokenAddress = lastDeploymentData?.address;
     const ipfsCid = await ipfsStoreFilePin(tokenScriptSource);
     //const ipfsCid = await ipfsStoreFile(tokenScriptSource);
+
+    toast.remove(deployToast);
+
+    if (ipfsCid === null) {
+      toast.error("Error uploading to IPFS");
+      return;
+    } else {
+      toast.success("TokenScript uploaded: now update scriptURI on token contract")
+    }
 
     const ipfsRoute = [`ipfs://${ipfsCid}`];
 

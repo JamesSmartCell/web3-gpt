@@ -4,6 +4,7 @@ import handleImports from "@/lib/functions/deploy-contract/handle-imports"
 import { getChainById, getExplorerUrl } from "@/lib/viem-utils"
 import ipfsUpload from "@/lib/functions/deploy-contract/ipfs-upload"
 import { type Chain, type Hex, createWalletClient, encodeDeployData, http } from "viem"
+import toast from "react-hot-toast"
 import { privateKeyToAccount } from "viem/accounts"
 import { track } from "@vercel/analytics/server"
 
@@ -58,6 +59,8 @@ export default async function deployContract({
     sources[sourceKey].content = sourceCode
   }
 
+  let compileToast = toast.loading("Compiling token contract...");
+
   console.log(sources)
 
   // Compile the contract
@@ -95,6 +98,8 @@ export default async function deployContract({
   if (!bytecode.startsWith("0x")) {
     bytecode = `0x${bytecode}`
   }
+
+  toast.remove(compileToast);
 
   const deployerPk: Hex = `0x${process.env.DEPLOYER_PRIVATE_KEY}`
   const account = privateKeyToAccount(deployerPk)
