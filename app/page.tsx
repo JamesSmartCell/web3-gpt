@@ -361,7 +361,6 @@ If the user asks for an ENS naming service feature, then add this card to the To
                             } else{
                             document.getElementById('status').innerHTML = 'Verifying name request ...'
                             // 3. register new name
-                            let contractAddress = document.getElementById("contractAddress").textContent;
                             fetch(\`\${serverAddr}/registerNFT/\${currentTokenInstance.chainId}/\${currentTokenInstance.contractAddress}/\${nameText}.\${domainName}/\${currentTokenInstance.tokenId}/\${value}\`, {
                                 method: 'POST',
                                 headers: {
