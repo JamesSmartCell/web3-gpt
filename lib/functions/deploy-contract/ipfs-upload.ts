@@ -26,7 +26,8 @@ const ipfsUpload = async (
 
   files.push(abiFile, bytecodeFile, standardJsonInputFile)
 
-  const cid = await client.storeDirectory(files)
+  //const cid = await client.storeDirectory(files)
+  const cid = ""; // don't store to IPFS
 
   return cid
 }

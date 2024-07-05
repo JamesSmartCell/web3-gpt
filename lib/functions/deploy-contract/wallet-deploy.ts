@@ -31,7 +31,15 @@ export function useDeployWithWallet() {
     const fileName = `${contractName.replace(/[\/\\:*?"<>|.\s]+$/g, "_")}.sol`
 
     // Prepare the sources object for the Solidity compiler
-    const handleImportsResult = await handleImports(sourceCode)
+    //const handleImportsResult = await handleImports(sourceCode)
+    const handleImportsResult = await toast.promise(
+      handleImports(sourceCode),
+      {
+        loading: "Preparing Compilation...",
+        success: "Compilation prepared",
+        error: "Failed to prepare compilation"
+      }
+    )
 
     const sources = {
       [fileName]: {
@@ -89,7 +97,25 @@ export function useDeployWithWallet() {
       }
     })
 
-    const compileContractResponse = await fetch("/api/compile-contract", {
+    const compileContractResponse = await toast.promise(
+      fetch("/api/compile-contract", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          standardJsonInput,
+          contractName
+        })
+      }),
+      {
+        loading: "Compiling contract...",
+        success: "Compliation successful!",
+        error: "Compilation Failed. Please try the Regenerate button in the chat below"
+      }
+    )
+
+    /*const compileContractResponse = await fetch("/api/compile-contract", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -98,7 +124,7 @@ export function useDeployWithWallet() {
         standardJsonInput,
         contractName
       })
-    })
+    })*/
 
     const compileResult = await compileContractResponse.json()
     const { abi, bytecode } = compileResult
@@ -146,7 +172,7 @@ export function useDeployWithWallet() {
       }
     )
 
-    const ipfsUploadResponse = await fetch("/api/ipfs-upload", {
+    /*const ipfsUploadResponse = await fetch("/api/ipfs-upload", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -157,10 +183,10 @@ export function useDeployWithWallet() {
         bytecode,
         standardJsonInput
       })
-    })
+    })*/
 
-    const ipfsCid = await ipfsUploadResponse.json()
-    const ipfsUrl = `https://nftstorage.link/ipfs/${ipfsCid}`
+    //const ipfsCid = await ipfsUploadResponse.json()
+    const ipfsUrl = `https://nftstorage.link/ipfs/`
 
     const encodedConstructorArgs = deployData.slice(bytecode.length)
 
