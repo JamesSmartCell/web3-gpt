@@ -99,7 +99,7 @@ export function useDeployWithWallet() {
 
     //console.log(`JSON: ${JSON.stringify(standardJsonInput)} : ${contractName}`);
 
-    const compileContractResponse = await toast.promise(
+    /*const compileContractResponse = await toast.promise(
       fetch("/api/compile-contract", {
         method: "POST",
         headers: {
@@ -115,25 +115,38 @@ export function useDeployWithWallet() {
         success: "Compliation successful!",
         error: "Compilation Failed. Please try the Regenerate button in the chat below"
       }
-    )
+    )*/
 
-    /*let compileToast = toast.loading("Compiling token contract...");
+    let compileToast = toast.loading("Compiling token contract...");
+    
+    var abi;
+    var bytecode;
 
-    const compileContractResponse = await fetch("/api/compile-contract", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        standardJsonInput,
-        contractName
+    try {
+
+      const compileContractResponse = await fetch("/api/compile-contract", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          standardJsonInput,
+          contractName
+        })
       })
-    })*/
 
-    const compileResult = await compileContractResponse.json()
-    const { abi, bytecode } = compileResult;
+      const compileResult = await compileContractResponse.json();
+      abi = compileResult.abi;
+      bytecode = compileResult.bytecode;
+      //const { abi, bytecode } = compileResult;
+      toast.success("Compilation successful");
+    } catch (error) {
+      toast.error("Compilation failed");
+    } finally {
+      toast.remove(compileToast);
+    }
 
-    //toast.remove(compileToast);
+
 
     const parsedConstructorArgs = constructorArgs.map((arg) => {
       if (arg.startsWith("[") && arg.endsWith("]")) {
