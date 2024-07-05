@@ -157,12 +157,6 @@ export function DeployTokenScriptButton({ sourceCode }: { sourceCode: string }) 
                 Sign and deploy the contract using your own wallet. Be cautious of risks and network fees.
               </p>
             </div>
-            {getConstructorArgs().length > 0 && (
-              <div className="flex max-h-48 flex-col gap-4 overflow-y-auto rounded border-2 p-4">
-                <DialogTitle className="text-md">Constructor Arguments</DialogTitle>
-                {generateInputFields()}
-              </div>
-            )}
           </div>
           <div className="flex flex-col items-center gap-4 py-4">
             {isErrorDeploying && <p className="text-sm text-destructive">Error deploying contract.</p>}
