@@ -59,8 +59,6 @@ export default async function deployContract({
     sources[sourceKey].content = sourceCode
   }
 
-  let compileToast = toast.loading("Compiling token contract...");
-
   console.log(sources)
 
   // Compile the contract
@@ -98,8 +96,6 @@ export default async function deployContract({
   if (!bytecode.startsWith("0x")) {
     bytecode = `0x${bytecode}`
   }
-
-  toast.remove(compileToast);
 
   const deployerPk: Hex = `0x${process.env.DEPLOYER_PRIVATE_KEY}`
   const account = privateKeyToAccount(deployerPk)
